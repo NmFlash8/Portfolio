@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(30px); /* Start slightly lower */
+    animation: fadeInUp 1.5s ease-in-out forwards; /* Apply animation */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Start lower */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Move to normal position */
+    }
+}
+.container {
+    margin-top: 50px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #0056b3;
+}
