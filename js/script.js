@@ -1,52 +1,85 @@
-// Dynamic Projects Gallery
+// js/script.js
+
 const projects = [
     {
-        title: "Project 1",
-        description: "Description for Project 1",
-        img: "assets/images/project1.png"
+        title: "RuneLite Event Server",
+        description: "Flask server to handle RuneLite EventsAPI: levels, quests, bank items, and inventory.",
+        link: "https://github.com/nmflash8"
     },
     {
-        title: "Project 2",
-        description: "Description for Project 2",
-        img: "assets/images/project2.png"
+        title: "Super Paper Mario Stat Sync",
+        description: "UDP client/server with Dolphin Memory Engine for stat syncing.",
+        link: "https://github.com/nmflash8"
+    },
+    {
+        title: "Factorio Picture Generator",
+        description: "encodes and decodes json to create custom objects to draw any picture in factorio",
+        link: "https://github.com/nmflash8"
     }
 ];
 
-const gallery = document.getElementById("projects-gallery");
+const gallery = document.getElementById("project-gallery");
 
 projects.forEach(project => {
-    const projectCard = document.createElement("div");
-    projectCard.classList.add("project-card");
-
-    const img = document.createElement("img");
-    img.src = project.img;
-    img.alt = project.title;
-
-    const title = document.createElement("h3");
-    title.textContent = project.title;
-
-    const description = document.createElement("p");
-    description.textContent = project.description;
-
-    projectCard.appendChild(img);
-    projectCard.appendChild(title);
-    projectCard.appendChild(description);
-
-    gallery.appendChild(projectCard);
+    const card = document.createElement("div");
+    card.className = "project-card";
+    card.innerHTML = `
+        <h3>${project.title}</h3>
+        <p>${project.description}</p>
+        <a href="${project.link}" target="_blank">View Project</a>
+    `;
+    gallery.appendChild(card);
 });
 
-// Contact form validation (Example)
-document.getElementById("contact-form").addEventListener("submit", function(event) {
-    event.preventDefault();
+// Contact Form Validation
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('form');
+    const status = document.getElementById('form-status');
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-    if (name && email && message) {
-        alert("Thank you for your message!");
-        // You can send the form data here
-    } else {
-        alert("Please fill in all fields.");
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !email || !message) {
+                status.textContent = "Please fill in all fields.";
+                status.style.color = "red";
+                return;
+            }
+
+            if (!email.includes('@')) {
+                status.textContent = "Please enter a valid email.";
+                status.style.color = "red";
+                return;
+            }
+
+            status.textContent = "Message sent successfully! (Pretend send)";
+            status.style.color = "green";
+
+            form.reset();
+        });
     }
+
+    // Scroll animation (basic fade-in)
+    const faders = document.querySelectorAll('.fade-in');
+
+    const appearOptions = {
+        threshold: 0.3,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('appear');
+            observer.unobserve(entry.target);
+        });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+        appearOnScroll.observe(fader);
+    });
 });
